@@ -14,9 +14,9 @@ public class Bomb : Ent2D {
 	// Update is called once per frame
 	void Update () {
 		if (fromShip) {
-			lastMove = mover.MoveUp (DIST_Y);
+			lastMove = mover.MoveUp (DIST_Y, UP_BOUND_Y);
 		} else {
-			lastMove = mover.MoveDown (DIST_Y);
+			lastMove = mover.MoveDown (DIST_Y, DOWN_BOUND_Y);
 		}
 
 		if (!lastMove) {
