@@ -25,9 +25,4 @@ public class Ent2D : MonoBehaviour {
 	void Start () {
 		Init ();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

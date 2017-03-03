@@ -23,6 +23,8 @@ public class Player : Ent2D {
 			Bomb b = go.GetComponent<Bomb> ();
 			b.fromShip = true;
 			b.parent = this;
+			b.Init ();
+			b.flipY ();
 			shootable = false;
 		}
 

@@ -24,4 +24,8 @@ public class Bomb : Ent2D {
 			Destroy (this.gameObject);
 		}
 	}
+
+	public void flipY(){
+		sr.flipY = true;
+	}
 }

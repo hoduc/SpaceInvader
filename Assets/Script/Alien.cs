@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Alien : Ent2D {
-	private int time = 0;
+	private int index = 0; //move direction
+	//driving index by an array for example
 	// Use this for initialization
 	void Start () {
 		Init ();
@@ -11,11 +12,22 @@ public class Alien : Ent2D {
 	
 	// Update is called once per frame
 	void Update () {
-		//if (Time.time / 2 == 0) {
-			if (!mover.MoveRight (DIST_X / 4)) {
-				//mover.MoveLeft (DIST_X / 4);
-			}
+		if (!MoveIndex (index)) {
+			index = ( index + 1 )%2;
+		}
+	}
 
-		//}
+	bool MoveIndex(int index){
+		bool ret = false;
+		switch (index) {
+		case 0:
+			ret = mover.MoveRight (DIST_X/4);
+			break;
+		case 1:
+			ret = mover.MoveLeft (DIST_X/4);
+			break;
+		}
+
+		return ret;
 	}
 }
