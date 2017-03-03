@@ -1,8 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
-public class Player : Ent2D {
+public class Player : Ent2D{
+	public UnityEvent TakeDamageEvent;
 	// Use this for initialization
 	void Start () {
 		Init ();
