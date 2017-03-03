@@ -20,13 +20,18 @@ public class Stat : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (Input.GetKeyDown (KeyCode.F)) {
+			OnPlayerTakeDamage ();
+		}
 	}
 
 	void OnPlayerTakeDamage(){
 		if (lives - 1 == 0) {
+			Debug.Log ("game over");
 			return;
 		}
+		//take off live
+		Destroy(liveSprites[lives-1]);
 		lives--;
 	}
 }
