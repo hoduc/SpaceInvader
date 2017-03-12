@@ -29,9 +29,7 @@ public class Player : Ent2D{
 		if (Input.GetKeyDown (KeyCode.Space) && shootable) {
 			GameObject go = GameObject.Instantiate (child, new Vector3 (transform.position.x, transform.position.y + DIST_Y, 0.0f), Quaternion.identity);
 			Bomb b = go.GetComponent<Bomb> ();
-			b.fromShip = true;
-			b.parent = this;
-				b.Init ();
+			b.Init ();
 			b.SetOwner (this, true);
 			b.SetUpBoundY (7.79f);
 			b.SetDownBoundY (-7.79f);

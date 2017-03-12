@@ -22,6 +22,11 @@ public class Ent2D : MonoBehaviour {
 	public float UP_BOUND_Y;
 	public float DOWN_BOUND_Y;
 
+	public static float LBX = -7.79f;
+	public static float RBX = 7.79f;
+	public static float UBY = -7.79f;
+	public static float DBY = 7.79f;
+
 	void Start(){
 		sr = GetComponent<SpriteRenderer> ();
 		mover = GetComponent<Movement> ();
