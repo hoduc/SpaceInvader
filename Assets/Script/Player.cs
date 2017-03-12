@@ -27,6 +27,8 @@ public class Player : Ent2D{
 			b.fromShip = true;
 			b.parent = this;
 			b.Init ();
+			b.SetUpBoundY (7.79f);
+			b.SetDownBoundY (-7.79f);
 			b.flipY ();
 			shootable = false;
 		}

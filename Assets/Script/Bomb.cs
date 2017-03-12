@@ -7,13 +7,12 @@ public class Bomb : Ent2D {
 	public bool fromShip = false;
 	private bool lastMove = false;
 	// Use this for initialization
-	void Start () {
-		Init ();
-	}
 	
 	// Update is called once per frame
 	void Update () {
 		if (fromShip) {
+			//Debug.Log ("DIST_Y:" + DIST_Y);
+			//Debug.Log ("UP_BOUND_Y:" + UP_BOUND_Y);
 			lastMove = mover.MoveUp (DIST_Y, UP_BOUND_Y);
 		} else {
 			lastMove = mover.MoveDown (DIST_Y, DOWN_BOUND_Y);
