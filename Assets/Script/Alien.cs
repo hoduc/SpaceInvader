@@ -6,7 +6,7 @@ public class Alien : Ent2D {
 	public bool startMoving = false;
 	private int index = 0; //move direction
 	//driving index by an array for example
-	// Update is called once per frame
+
 	void Update () {
 		if (startMoving && !MoveIndex (index)) {
 			index = ( index + 1 )%2;

@@ -8,6 +8,10 @@ public class Ent2D : MonoBehaviour {
 	protected SpriteRenderer sr;
 	protected Movement mover;
 	public GameObject child;
+	public AudioClip spawnClip;
+	public AudioClip dieClip;
+	public Sprite dieSprite;
+	public float dieSec = 1.0f;
 	public bool shootable = true;
 
 	protected float DIST_X;
@@ -18,6 +22,11 @@ public class Ent2D : MonoBehaviour {
 	public float UP_BOUND_Y;
 	public float DOWN_BOUND_Y;
 
+	void Start(){
+		sr = GetComponent<SpriteRenderer> ();
+		mover = GetComponent<Movement> ();
+	}
+
 	public void Init(float lbx = -7.79f, float rbx = 7.79f, float uby = -7.79f, float dby = 7.79f){
 		sr = GetComponent<SpriteRenderer> ();
 		mover = GetComponent<Movement> ();
@@ -27,6 +36,8 @@ public class Ent2D : MonoBehaviour {
 		RIGHT_BOUND_X = rbx;
 		UP_BOUND_Y = uby;
 		DOWN_BOUND_Y = dby;
+		//Debug.Log ("spawnCLip:" + spawnClip);
+		PlaySound (spawnClip, transform.position);
 	}
 
 	public void SetUpBoundY(float uby){
@@ -37,15 +48,36 @@ public class Ent2D : MonoBehaviour {
 		DOWN_BOUND_Y = dby;
 	}
 
-//	public void Init(){
-//		sr = GetComponent<SpriteRenderer> ();
-//		mover = GetComponent<Movement> ();
-//		DIST_X = sr.bounds.extents.x;
-//		DIST_Y = sr.bounds.extents.y;
-//		LEFT_BOUND_X = -7.79f;
-//		RIGHT_BOUND_X = 7.79f;
-//		UP_BOUND_Y = -7.79f;
-//		DOWN_BOUND_Y = 7.79f;
-//
-//	}
+	public void SetLeftBoundX(float lbx){
+		LEFT_BOUND_X = lbx;
+	}
+
+	public void SetRightBoundX(float rbx){
+		RIGHT_BOUND_X = rbx;
+	}
+
+	public void PlaySound(AudioClip clip, Vector3 pos){
+		if (clip) {
+			Debug.Log ("play : " + clip.name);
+			AudioSource.PlayClipAtPoint (clip, pos);
+		}
+	}
+
+	//Overwrite this for dying and custom dying
+	public void OnDie(Collider2D other){
+		Vector3 soundPos = this.transform.position;
+		if (other) {
+			Debug.Log ("hello");
+			soundPos = other.transform.position;
+			other.isTrigger = false;
+		}
+		PlaySound (dieClip, soundPos);//play die clip
+		sr.sprite = dieSprite;
+		StartCoroutine (finishedDieTime (dieSec));
+	}
+
+	IEnumerator finishedDieTime(float sec){
+		yield return new WaitForSeconds (sec);
+		sr.enabled = false;
+	}
 }

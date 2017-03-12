@@ -4,11 +4,8 @@ using UnityEngine;
 using UnityEngine.Events;
 
 public class Player : Ent2D{
-	public UnityEvent TakeDamageEvent;
+	public UnityEvent TakeDamageEvent; // drytest
 	// Use this for initialization
-	void Start () {
-		Init ();
-	}
 	
 	// Update is called once per frame
 	void Update () {
@@ -21,36 +18,25 @@ public class Player : Ent2D{
 			mover.MoveLeft (DIST_X, LEFT_BOUND_X);
 		}
 
+		if (Input.GetKeyDown (KeyCode.D)) {
+			TakeDamageEvent.Invoke (); //die
+		}
+
 		if (Input.GetKeyDown (KeyCode.Space) && shootable) {
 			GameObject go = GameObject.Instantiate (child, new Vector3 (transform.position.x, transform.position.y + DIST_Y, 0.0f), Quaternion.identity);
 			Bomb b = go.GetComponent<Bomb> ();
 			b.fromShip = true;
 			b.parent = this;
 			b.Init ();
+			b.SetOwner (this, true);
 			b.SetUpBoundY (7.79f);
 			b.SetDownBoundY (-7.79f);
-			b.flipY ();
 			shootable = false;
 		}
-
-//		if (bulletMover) {
-//			bulletMover.MoveUp(
-//		}
-
-		/*
-		if (Input.GetKeyDown (KeyCode.UpArrow)) {
-			mover.MoveUp (DIST_Y);
-			//Debug.Log(sr.bounds.extents.y);
-		}
-
-		if (Input.GetKeyDown (KeyCode.DownArrow)) {
-			mover.MoveDown (DIST_Y);
-		}*/
 	}
 
-//	void Shoot(){
-//		if (shootable) {
-//			bullet = Instantiate (bullet);
-//		}
-//	}
+	public void OnDieTest(){
+		//nothing
+		OnDie(this.GetComponent<BoxCollider2D>());
+	}
 }
