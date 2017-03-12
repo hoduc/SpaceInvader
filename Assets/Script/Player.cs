@@ -6,11 +6,15 @@ using UnityEngine.Events;
 public class Player : Ent2D{
 	public UnityEvent TakeDamageEvent; // drytest
 	// Use this for initialization
-	
+
+	void Start(){
+		Init ();
+	}
+
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			//Debug.Log("result(plus):" + (Mathf.Abs(transform.position.x + DIST_X) - RIGHT_BOUND_X));
+			Debug.Log ("move right:" + DIST_X);
 			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
 		}
 
@@ -27,7 +31,7 @@ public class Player : Ent2D{
 			Bomb b = go.GetComponent<Bomb> ();
 			b.fromShip = true;
 			b.parent = this;
-			b.Init ();
+				b.Init ();
 			b.SetOwner (this, true);
 			b.SetUpBoundY (7.79f);
 			b.SetDownBoundY (-7.79f);
