@@ -44,13 +44,19 @@ public class AlienSpawner : MonoBehaviour {
         {
             for (int i = 0; i < numShootable; i++)
             {
-                int randomIndex = Random.Range(0, aliens.Length - 1);
-                while (aliens[randomIndex].isZombie) { randomIndex = Random.Range(0, aliens.Length - 1); } // not dead
-                aliens[randomIndex].shootable = true;
-                pickedAlienMap[aliens[randomIndex]] = randomIndex;
+                pickRandomAlienShootable();
             }
         }
 	}
+
+
+    void pickRandomAlienShootable()
+    {
+        int randomIndex = Random.Range(0, aliens.Length - 1);
+        while (aliens[randomIndex].isZombie) { randomIndex = Random.Range(0, aliens.Length - 1); }
+        aliens[randomIndex].shootable = true;
+        pickedAlienMap[aliens[randomIndex]] = randomIndex;
+    }
 
     public void OnAlienDie(Alien alien)
     {
@@ -58,10 +64,8 @@ public class AlienSpawner : MonoBehaviour {
         if(pickedAlienMap.TryGetValue(alien, out randomIndex))
         {
             //regenerate the index
-            randomIndex = Random.Range(0, aliens.Length - 1);
-            while (aliens[randomIndex].isZombie) { randomIndex = Random.Range(0, aliens.Length - 1); }
-            aliens[randomIndex].shootable = true;
-            pickedAlienMap[aliens[randomIndex]] = randomIndex;
+            pickRandomAlienShootable();
         }
     }
+    
 }

@@ -43,7 +43,7 @@ public class Ent2D : MonoBehaviour {
 		UP_BOUND_Y = uby;
 		DOWN_BOUND_Y = dby;
 		//Debug.Log ("spawnCLip:" + spawnClip);
-		//PlaySound (spawnClip, transform.position);
+		PlaySound (spawnClip, transform.position);
 	}
 
 	public void SetUpBoundY(float uby){
