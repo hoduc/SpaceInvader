@@ -14,7 +14,6 @@ public class Player : Ent2D{
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
-			Debug.Log ("move right:" + DIST_X);
 			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
 		}
 
@@ -27,13 +26,7 @@ public class Player : Ent2D{
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && shootable) {
-			GameObject go = GameObject.Instantiate (child, new Vector3 (transform.position.x, transform.position.y + DIST_Y, 0.0f), Quaternion.identity);
-			Bomb b = go.GetComponent<Bomb> ();
-			b.Init ();
-			b.SetOwner (this, true);
-			b.SetUpBoundY (7.79f);
-			b.SetDownBoundY (-7.79f);
-			shootable = false;
+            Ent2D.CreateBomb(child, this, DIST_Y);
 		}
 	}
 

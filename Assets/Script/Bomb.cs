@@ -9,8 +9,10 @@ public class Bomb : Ent2D {
 
 	void Update () {
 		if (fromShip) {
+            //Debug.Log("move up");
 			lastMove = mover.MoveUp (DIST_Y, UP_BOUND_Y);
 		} else {
+            //Debug.Log("move down!!!");
 			lastMove = mover.MoveDown (DIST_Y, DOWN_BOUND_Y);
 		}
 

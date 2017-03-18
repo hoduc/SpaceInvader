@@ -13,6 +13,7 @@ public class Ent2D : MonoBehaviour {
 	public Sprite dieSprite;
 	public float dieSec = 1.0f;
 	public bool shootable = true;
+    public bool isZombie = false;
 
 	protected float DIST_X;
 	protected float DIST_Y;
@@ -42,7 +43,7 @@ public class Ent2D : MonoBehaviour {
 		UP_BOUND_Y = uby;
 		DOWN_BOUND_Y = dby;
 		//Debug.Log ("spawnCLip:" + spawnClip);
-		PlaySound (spawnClip, transform.position);
+		//PlaySound (spawnClip, transform.position);
 	}
 
 	public void SetUpBoundY(float uby){
@@ -72,7 +73,7 @@ public class Ent2D : MonoBehaviour {
 	public void OnDie(Collider2D other){
 		Vector3 soundPos = this.transform.position;
 		if (other) {
-			Debug.Log ("hello");
+			//Debug.Log ("hello");
 			soundPos = other.transform.position;
 			other.isTrigger = false;
 		}
@@ -84,5 +85,18 @@ public class Ent2D : MonoBehaviour {
 	IEnumerator finishedDieTime(float sec){
 		yield return new WaitForSeconds (sec);
 		sr.enabled = false;
-	}
+        isZombie = true;
+    }
+
+    public static Bomb CreateBomb(GameObject bomb, Ent2D owner, float dropY, float upBoundY = 7.79f, float downBoundY = 7.79f, bool bomFlip = true)
+    {
+        GameObject go = GameObject.Instantiate(bomb, new Vector3(owner.transform.position.x, owner.transform.position.y + dropY, 0.0f), Quaternion.identity);
+        Bomb b = go.GetComponent<Bomb>();
+        b.Init();
+        b.SetOwner(owner, bomFlip);
+        b.SetUpBoundY(upBoundY);
+        b.SetDownBoundY(downBoundY);
+        owner.shootable = false;
+        return b;
+    }
 }
