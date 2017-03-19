@@ -64,13 +64,13 @@ public class Ent2D : MonoBehaviour {
 
 	public void PlaySound(AudioClip clip, Vector3 pos){
 		if (clip) {
-			Debug.Log ("play : " + clip.name);
+			//Debug.Log ("play : " + clip.name);
 			AudioSource.PlayClipAtPoint (clip, pos);
 		}
 	}
 
 	//Overwrite this for dying and custom dying
-	public void OnDie(Collider2D other){
+	public virtual void OnDie(Collider2D other){
 		Vector3 soundPos = this.transform.position;
 		if (other) {
 			//Debug.Log ("hello");
@@ -79,13 +79,14 @@ public class Ent2D : MonoBehaviour {
 		}
 		PlaySound (dieClip, soundPos);//play die clip
 		sr.sprite = dieSprite;
+		isZombie = true;
+		shootable = false;
 		StartCoroutine (finishedDieTime (dieSec));
 	}
 
 	IEnumerator finishedDieTime(float sec){
 		yield return new WaitForSeconds (sec);
 		sr.enabled = false;
-        isZombie = true;
     }
 
     public static Bomb CreateBomb(GameObject bomb, Ent2D owner, float dropY, float upBoundY = 7.79f, float downBoundY = 7.79f, bool bomFlip = true)

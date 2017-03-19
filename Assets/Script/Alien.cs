@@ -33,10 +33,9 @@ public class Alien : Ent2D {
 		return ret;
 	}
 
-    public void OnDie(Collider2D other)
+    public override void OnDie(Collider2D other)
     {
         base.OnDie(other);
-        isZombie = true;
         //broadcast die event
         new AlienDieEvent().Invoke(this);
     }

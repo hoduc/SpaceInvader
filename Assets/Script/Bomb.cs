@@ -17,7 +17,7 @@ public class Bomb : Ent2D {
 		}
 
 		if (!lastMove) { // past the end of the screen(Y,-Y)
-			OnDie();
+			OnDie(null);
 		}
 	}
 
@@ -32,13 +32,14 @@ public class Bomb : Ent2D {
 		Ent2D otherEnt = other.GetComponent<Ent2D> ();
 		if (otherEnt && otherEnt != parent) {
 			//destroy the bomb
-			Debug.Log("collided with : " + otherEnt.name);
+			//Debug.Log("collided with : " + otherEnt.name);
 			otherEnt.OnDie (other);
-			OnDie ();
+			OnDie (other);
 		}
 	}
 
-	void OnDie(){
+	public override void OnDie(Collider2D other){
+		base.OnDie(other);
 		parent.shootable = true;
 		Destroy (gameObject);
 	}
