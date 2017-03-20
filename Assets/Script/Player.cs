@@ -12,7 +12,7 @@ public class Player : Ent2D{
 	}
 
 	// Update is called once per frame
-	void Update () {
+	public override void EntUpdate () {
 		if (Input.GetKeyDown (KeyCode.RightArrow)) {
 			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
 		}

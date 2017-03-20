@@ -8,10 +8,12 @@ public class Alien : Ent2D {
     public float distDivider = 1.0f;
 	//driving index by an array for example
 
-	void Update () {
-        //Debug.Log("alien Shootable:" + shootable);
+	public override void EntUpdate () {
+		//Debug.Log("base shootable=" + base.shootable);
+        Debug.Log("alien Shootable:" + this.shootable);
         if (shootable)
         {
+			Debug.Log("Create bomb");
             Ent2D.CreateBomb(child, this, -DIST_Y, -7.79f, 7.79f, false);
         }
 		if (startMoving && !MoveIndex (index)) {
@@ -36,7 +38,10 @@ public class Alien : Ent2D {
     public override void OnDie(Collider2D other)
     {
         base.OnDie(other);
+		
+		Debug.Log("shootable = " + shootable);
+		Debug.Log("isZombie=" + isZombie);
         //broadcast die event
-        new AlienDieEvent().Invoke(this);
+        AlienSpawner.alienDieEvent.Invoke(this);
     }
 }

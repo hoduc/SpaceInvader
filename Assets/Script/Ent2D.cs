@@ -33,6 +33,13 @@ public class Ent2D : MonoBehaviour {
 		mover = GetComponent<Movement> ();
 	}
 
+	public virtual void EntUpdate(){
+	}
+
+	void Update(){
+		EntUpdate();
+	}
+
 	public void Init(float lbx = -7.79f, float rbx = 7.79f, float uby = -7.79f, float dby = 7.79f){
 		sr = GetComponent<SpriteRenderer> ();
 		mover = GetComponent<Movement> ();

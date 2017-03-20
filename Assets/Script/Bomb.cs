@@ -7,7 +7,10 @@ public class Bomb : Ent2D {
 	public bool fromShip = false;
 	private bool lastMove = false;
 
-	void Update () {
+	public override void EntUpdate () {
+		// //parent dead, dont do anything
+		// if(parent.isZombie)
+		// 	return;
 		if (fromShip) {
             //Debug.Log("move up");
 			lastMove = mover.MoveUp (DIST_Y, UP_BOUND_Y);
@@ -40,7 +43,8 @@ public class Bomb : Ent2D {
 
 	public override void OnDie(Collider2D other){
 		base.OnDie(other);
-		parent.shootable = true;
+		if(!parent.isZombie)
+			parent.shootable = true;
 		Destroy (gameObject);
 	}
 }
