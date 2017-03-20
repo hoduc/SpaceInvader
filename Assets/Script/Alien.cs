@@ -6,6 +6,7 @@ public class Alien : Ent2D {
 	public bool startMoving = false;
 	private int index = 0; //move direction
     public float distDivider = 1.0f;
+	public string AlienType = "alien";
 	//driving index by an array for example
 
 	public override void EntUpdate () {

@@ -15,6 +15,7 @@ public class AlienSpawner : MonoBehaviour {
     public float DistDivider = 6;
     public bool shootable = false;
     public int numShootable = 3;
+    public string AlienType;
     private Alien[] aliens;
     private Dictionary<int, int> pickedAlienMap = new Dictionary<int, int>();
     private int deads = 0;
@@ -53,11 +54,23 @@ public class AlienSpawner : MonoBehaviour {
         alienDieEvent.AddListener(OnAlienDie);
 	}
 
+    //picked = isZombie || isInMap
+    bool isAlienAlreadyPicked(Alien alien){
+        //Debug.Log("hashcodeater:" + alien.GetHashCode());
+        int index;
+        bool isZ = alien.isZombie;
+        //Debug.Log("isZombie:"+ isZ);
+        bool isPrevPicked = pickedAlienMap.TryGetValue(alien.GetHashCode(), out index);
+        //Debug.Log("isPrevPicked:"+ isPrevPicked);
+        return isZ || isPrevPicked;
+    }
 
     int pickRandomAlienIndexNotDead()
     {
         int randomIndex = Random.Range(0, aliens.Length - 1);
-        while (aliens[randomIndex].isZombie) { randomIndex = Random.Range(0, aliens.Length - 1); }
+        //Debug.Log("how about index:" + randomIndex);
+        //Debug.Log("hashcodeb4:" + aliens[randomIndex].GetHashCode());
+        while (isAlienAlreadyPicked(aliens[randomIndex])) { randomIndex = Random.Range(0, aliens.Length - 1); }
         return randomIndex;
     }
 
@@ -72,19 +85,19 @@ public class AlienSpawner : MonoBehaviour {
 
     public void OnAlienDie(Alien alien)
     {   
-        //Debug.Log(alien.GetHashCode() + ":die!!!");
-        int randomIndex = -1;
-        if(pickedAlienMap.TryGetValue(alien.GetHashCode(), out randomIndex))
-        {
-            //actually records deads
-            deads++;
-            Debug.Log("destroy randomIndex:" + randomIndex);
-            if(randomIndex != -1){
-                pickRandomAlienShootableNotDead();
-            }
-        }else{
+        //does it belong to my spawner?
+        if(spawner && spawner.GetComponent<Alien>().AlienType != alien.AlienType){
             Debug.Log("not in this spawner");
+            return;
         }
+        //register dead
+        deads++;
+        int index;
+        if(pickedAlienMap.TryGetValue(alien.GetHashCode(),out index)){ //armed alien dead, pick new shootable
+            pickedAlienMap.Remove(alien.GetHashCode());
+            pickRandomAlienShootableNotDead();
+        }
+        //unarmed alien dead ?
     }
     
 }
