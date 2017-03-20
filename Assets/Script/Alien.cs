@@ -43,6 +43,6 @@ public class Alien : Ent2D {
 		Debug.Log("shootable = " + shootable);
 		Debug.Log("isZombie=" + isZombie);
         //broadcast die event
-        AlienSpawner.alienDieEvent.Invoke(this);
+        EventDispatcher.Instance.AlienDieEvent.Invoke(this);
     }
 }
