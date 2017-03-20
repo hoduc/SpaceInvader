@@ -10,6 +10,7 @@ public class Ent2D : MonoBehaviour {
 	public GameObject child;
 	public AudioClip spawnClip;
 	public AudioClip dieClip;
+	public Sprite spawnSprite;
 	public Sprite dieSprite;
 	public float dieSec = 1.0f;
 	public bool shootable = true;
@@ -94,6 +95,7 @@ public class Ent2D : MonoBehaviour {
 	IEnumerator finishedDieTime(float sec){
 		yield return new WaitForSeconds (sec);
 		sr.enabled = false;
+		EventDispatcher.Instance.PlayerFinishedDyingEvent.Invoke();
     }
 
     public static Bomb CreateBomb(GameObject bomb, Ent2D owner, float dropY, float upBoundY = 7.79f, float downBoundY = 7.79f, bool bomFlip = true)

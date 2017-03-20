@@ -13,11 +13,11 @@ public class Player : Ent2D{
 
 	// Update is called once per frame
 	public override void EntUpdate () {
-		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+		if (Input.GetKeyDown (KeyCode.RightArrow) && !isZombie) {
 			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
 		}
 
-		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+		if (Input.GetKeyDown (KeyCode.LeftArrow) && !isZombie) {
 			mover.MoveLeft (DIST_X, LEFT_BOUND_X);
 		}
 
@@ -33,5 +33,18 @@ public class Player : Ent2D{
 	public void OnDieTest(){
 		//nothing
 		OnDie(this.GetComponent<BoxCollider2D>());
+	}
+
+	public override void OnDie(Collider2D other){
+		base.OnDie(other);
+		//fire player event
+		EventDispatcher.Instance.PlayerDieEvent.Invoke();
+	}
+
+	public void OnRespawn(){
+		isZombie = false;
+		shootable = true;
+		sr.sprite = spawnSprite;
+		sr.enabled = true;
 	}
 }

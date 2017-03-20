@@ -8,7 +8,6 @@ public class Stat : MonoBehaviour {
 	private GameObject[] liveSprites;
 	// Use this for initialization
 	void Start () {
-		//Player.TakeDamageEvent.AddListener (OnPlayerTakeDamage);
 		SpriteRenderer liveSpriteRenderer = liveSprite.GetComponent<SpriteRenderer> ();
 		float x = transform.position.x;
 		float y = transform.position.y;
@@ -17,15 +16,8 @@ public class Stat : MonoBehaviour {
 			liveSprites[i] = GameObject.Instantiate(liveSprite, new Vector3(x - (float)(i*liveSpriteRenderer.bounds.size.x), y, 0.0f), Quaternion.identity);
 		}
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		if (Input.GetKeyDown (KeyCode.F)) {
-			OnPlayerTakeDamage ();
-		}
-	}
 
-	void OnPlayerTakeDamage(){
+	public void OnPlayerDie(){
 		if (lives - 1 == 0) {
 			Debug.Log ("game over");
 			return;

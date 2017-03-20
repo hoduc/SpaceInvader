@@ -10,10 +10,10 @@ public class Alien : Ent2D {
 
 	public override void EntUpdate () {
 		//Debug.Log("base shootable=" + base.shootable);
-        Debug.Log("alien Shootable:" + this.shootable);
+        //Debug.Log("alien Shootable:" + this.shootable);
         if (shootable)
         {
-			Debug.Log("Create bomb");
+			//Debug.Log("Create bomb");
             Ent2D.CreateBomb(child, this, -DIST_Y, -7.79f, 7.79f, false);
         }
 		if (startMoving && !MoveIndex (index)) {
