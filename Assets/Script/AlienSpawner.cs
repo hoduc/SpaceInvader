@@ -93,7 +93,7 @@ public class AlienSpawner : MonoBehaviour {
         //register dead
         deads++;
         int index;
-        if(pickedAlienMap.TryGetValue(alien.GetHashCode(),out index)){ //armed alien dead, pick new shootable
+        if(pickedAlienMap.TryGetValue(alien.GetHashCode(),out index)){ //armed one dead, pick new shootable
             pickedAlienMap.Remove(alien.GetHashCode());
             pickRandomAlienShootableNotDead();
         }

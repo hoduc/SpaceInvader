@@ -32,10 +32,17 @@ public class Bomb : Ent2D {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
+		//check colliding with another bomb
+		Bomb otherBomb = other.GetComponent<Bomb>();
+		if(otherBomb){
+			OnDie(other);
+			otherBomb.OnDie(null);
+		}
+
 		Ent2D otherEnt = other.GetComponent<Ent2D> ();
-		if (otherEnt && otherEnt != parent) {
+		if (otherEnt && otherEnt != parent && !otherEnt.isZombie) {
 			//destroy the bomb
-			//Debug.Log("collided with : " + otherEnt.name);
+			Debug.Log("collided with : " + otherEnt.name);
 			otherEnt.OnDie (other);
 			OnDie (other);
 		}
@@ -43,7 +50,7 @@ public class Bomb : Ent2D {
 
 	public override void OnDie(Collider2D other){
 		base.OnDie(other);
-		if(!parent.isZombie)
+		if(parent && !parent.isZombie)
 			parent.shootable = true;
 		Destroy (gameObject);
 	}

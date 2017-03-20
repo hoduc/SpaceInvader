@@ -44,6 +44,7 @@ public class Player : Ent2D{
 	public void OnRespawn(){
 		isZombie = false;
 		shootable = true;
+		GetComponent<BoxCollider2D>().isTrigger = true;
 		sr.sprite = spawnSprite;
 		sr.enabled = true;
 	}

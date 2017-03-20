@@ -89,6 +89,7 @@ public class Ent2D : MonoBehaviour {
 		sr.sprite = dieSprite;
 		isZombie = true;
 		shootable = false;
+		GetComponent<BoxCollider2D>().isTrigger = false;
 		StartCoroutine (finishedDieTime (dieSec));
 	}
 
