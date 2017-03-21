@@ -34,15 +34,28 @@ public class Movement : MonoBehaviour {
 		return MoveUp (-dist, bound);
 	}
 
-	public bool MoveDiagonalUp(float distX, float distY, float boundX, float boundY){
+	public bool MoveDiagonalUpRight(float distX, float distY, float boundX, float boundY){
 		bool ret = MoveRight(distX, boundX);
 		ret &= MoveUp(distY, boundY);
 		return ret;
 	}
 
-	public bool MoveDiagonalDown(float distX, float distY, float boundX, float boundY){
+	public bool MoveDiagonalDownRight(float distX, float distY, float boundX, float boundY){
 		bool ret = MoveDown(distY, boundY);
-		ret &= MoveRight(distY, boundY);
+		ret &= MoveRight(distX, boundX);
 		return ret;
 	}
+
+	public bool MoveDiagonalDownLeft(float distX, float distY, float boundX, float boundY){
+		bool ret = MoveDown(distY, boundY);
+		ret &= MoveLeft(distX, boundX);
+		return ret;
+	}
+
+	public bool MoveDiagonalUpLeft(float distX, float distY, float boundX, float boundY){
+		bool ret = MoveUp(distY, boundY);
+		ret &= MoveLeft(distX, boundX);
+		return ret;
+	}
+
 }
