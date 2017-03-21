@@ -33,4 +33,16 @@ public class Movement : MonoBehaviour {
 	public bool MoveDown(float dist, float bound){
 		return MoveUp (-dist, bound);
 	}
+
+	public bool MoveDiagonalUp(float distX, float distY, float boundX, float boundY){
+		bool ret = MoveRight(distX, boundX);
+		ret &= MoveUp(distY, boundY);
+		return ret;
+	}
+
+	public bool MoveDiagonalDown(float distX, float distY, float boundX, float boundY){
+		bool ret = MoveDown(distY, boundY);
+		ret &= MoveRight(distY, boundY);
+		return ret;
+	}
 }
