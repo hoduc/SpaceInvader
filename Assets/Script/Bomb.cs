@@ -36,7 +36,7 @@ public class Bomb : Ent2D {
 		//check colliding with another bomb
 		Bomb otherBomb = other.GetComponent<Bomb>();
 		if(otherBomb){
-			Debug.Log ("collided with otherBomb");
+			//Debug.Log ("collided with otherBomb");
 			OnDie(other);
 			otherBomb.OnDie(null);
 		}
@@ -44,7 +44,7 @@ public class Bomb : Ent2D {
 		Ent2D otherEnt = other.GetComponent<Ent2D> ();
 		if (otherEnt && otherEnt != parent && !otherEnt.isZombie) {
 			//destroy the bomb
-			Debug.Log("collided with ent: " + otherEnt.name);
+			//Debug.Log("collided with ent: " + otherEnt.name);
 			otherEnt.OnDie (other);
 			OnDie (other);
 		}

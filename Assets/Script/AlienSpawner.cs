@@ -75,7 +75,7 @@ public class AlienSpawner : MonoBehaviour {
 
     void pickRandomAlienShootableNotDead(){
         int randomIndex = pickRandomAlienIndexNotDead();
-        Debug.Log("randomIndex:" + randomIndex);
+        //Debug.Log("randomIndex:" + randomIndex);
         aliens[randomIndex].shootable = true;
         pickedAlienMap.Add(aliens[randomIndex].GetHashCode(), randomIndex);
     }
@@ -101,24 +101,35 @@ public class AlienSpawner : MonoBehaviour {
             foreach(Alien a in aliens){
                 Destroy(a.gameObject);
             }
+			bool isDead = false;
+			if (rsMap.TryGetValue (rowShootable, out isDead)) {
+				rsMap [rowShootable] = true;
+			}
+
+//			foreach (var item in rsMap) {
+//				Debug.Log (item.Key + "=>" + item.Value);
+//			}
+
 			if (currentShootable == rowShootable){//currentshootable ddead{
-				//mark currentindex dead
-				bool isDead = false;
-				if (rsMap.TryGetValue (currentShootable, out isDead)) {
-					rsMap [currentShootable] = true;
+				if (currentShootable == 2) {
+					Debug.Log ("last row");
 				}
+				//mark currentindex dead
+
 				//get next one not dead
-				for (int i = currentShootable + 1; i < rsMap.Count; i++) {
+				int i = currentShootable + 1;
+				for (; i < rsMap.Count; i++) {
 					isDead = false;
-					if (rsMap.TryGetValue (currentShootable, out isDead)) {
+					if (rsMap.TryGetValue (i, out isDead)) {
 						Debug.Log ("row:" + i + ":" + isDead);
-						if(isDead){
-							Debug.Log ("next row:" + i);
-							EventDispatcher.Instance.ShootableRowEradicateEvent.Invoke (i); // next one responsible for the shootable
+						if(!isDead){
+							
 							break;
 						}
 					}
 				}
+				Debug.Log ("next row:" + i);
+				EventDispatcher.Instance.ShootableRowEradicateEvent.Invoke (i); // next one responsible for the shootable
             	
 			}
 			
