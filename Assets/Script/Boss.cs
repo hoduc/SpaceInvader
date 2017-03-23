@@ -9,14 +9,13 @@ public class Boss : Ent2D {
     public float diameterX = 5.0f;
 	public float diameterY = 5.0f;
 	public float distDivider = 1.0f;
-
 	public bool startMoving = false;
-
 	public bool dev = false;
-
 	private int count = 0;
+
+
 	//testing movement
-	void Start(){
+	/*void Start(){
 		Init(transform.position.x, transform.position.x + diameterX, transform.position.y + diameterY/2.0f, transform.position.y - diameterY/2.0f);
 		if (dev) {
 			CreateCirc (new Vector3 (transform.position.x, transform.position.y, transform.position.z), Color.green); //lbx
@@ -24,9 +23,14 @@ public class Boss : Ent2D {
 			CreateCirc (new Vector3 (transform.position.x + diameterX/2.0f, transform.position.y + diameterY/2.0f, transform.position.z), Color.green); //uby
 			CreateCirc (new Vector3 (transform.position.x + diameterX/2.0f, transform.position.y - diameterY/2.0f, transform.position.z), Color.green); //dby
 		}
-	}
+	}*/
 
 	public override void EntUpdate(){
+		if (shootable)
+		{
+			//Debug.Log("Create bomb");
+			Ent2D.CreateBomb(child, this, -DIST_Y, 7.79f, -7.79f, false);
+		}
 		if (startMoving && !MoveIndex (index)) {
 			if (index >= indexSize)
 				return;

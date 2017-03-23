@@ -13,6 +13,8 @@ public class AlienSpawner : MonoBehaviour {
     public bool shootable = false;
     public int rowShootable = 0;
     public int numShootable = 3;
+	public static int currentShootable = 0;
+	public static Dictionary<int, bool> rsMap = new Dictionary<int, bool> (); // rowshootable map
     public string AlienType;
     private Alien[] aliens;
     private Dictionary<int, int> pickedAlienMap = new Dictionary<int, int>();
@@ -22,6 +24,7 @@ public class AlienSpawner : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+		rsMap.Add (rowShootable, false);
         aliens = new Alien[col];
 		SpriteRenderer sr = spawner.GetComponent<SpriteRenderer> ();
 		float lastPos = transform.position.x + col * (sr.bounds.size.x + insetX);
@@ -98,9 +101,28 @@ public class AlienSpawner : MonoBehaviour {
             foreach(Alien a in aliens){
                 Destroy(a.gameObject);
             }
-            //Destroy this so event wont get to here
-            EventDispatcher.Instance.ShootableRowEradicateEvent.Invoke(rowShootable + 1); // next one responsible for the shootable
-            Destroy(gameObject);
+			if (currentShootable == rowShootable){//currentshootable ddead{
+				//mark currentindex dead
+				bool isDead = false;
+				if (rsMap.TryGetValue (currentShootable, out isDead)) {
+					rsMap [currentShootable] = true;
+				}
+				//get next one not dead
+				for (int i = currentShootable + 1; i < rsMap.Count; i++) {
+					isDead = false;
+					if (rsMap.TryGetValue (currentShootable, out isDead)) {
+						Debug.Log ("row:" + i + ":" + isDead);
+						if(isDead){
+							Debug.Log ("next row:" + i);
+							EventDispatcher.Instance.ShootableRowEradicateEvent.Invoke (i); // next one responsible for the shootable
+							break;
+						}
+					}
+				}
+            	
+			}
+			
+			Destroy(gameObject);//Destroy this so event wont get to here
             return;
         }
         int index;
@@ -113,6 +135,7 @@ public class AlienSpawner : MonoBehaviour {
 
     public void OnNextShootableRow(int row){
         if(rowShootable == row){
+			currentShootable = rowShootable;
             shootable = true;
             pickRandomAlienShootableNotDead();
         }

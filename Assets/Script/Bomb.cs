@@ -15,11 +15,11 @@ public class Bomb : Ent2D {
             //Debug.Log("move up");
 			lastMove = mover.MoveUp (DIST_Y, UP_BOUND_Y);
 		} else {
-            //Debug.Log("move down!!!");
 			lastMove = mover.MoveDown (DIST_Y, DOWN_BOUND_Y);
 		}
 
 		if (!lastMove) { // past the end of the screen(Y,-Y)
+			//Debug.Log("move no more!!");
 			OnDie(null);
 		}
 	}
@@ -32,9 +32,11 @@ public class Bomb : Ent2D {
 	}
 
 	void OnTriggerEnter2D(Collider2D other){
+		//Debug.Log ("collided with:" + other.name);
 		//check colliding with another bomb
 		Bomb otherBomb = other.GetComponent<Bomb>();
 		if(otherBomb){
+			Debug.Log ("collided with otherBomb");
 			OnDie(other);
 			otherBomb.OnDie(null);
 		}
@@ -42,13 +44,14 @@ public class Bomb : Ent2D {
 		Ent2D otherEnt = other.GetComponent<Ent2D> ();
 		if (otherEnt && otherEnt != parent && !otherEnt.isZombie) {
 			//destroy the bomb
-			Debug.Log("collided with : " + otherEnt.name);
+			Debug.Log("collided with ent: " + otherEnt.name);
 			otherEnt.OnDie (other);
 			OnDie (other);
 		}
 	}
 
 	public override void OnDie(Collider2D other){
+		//Debug.Log ("on bomb die!");
 		base.OnDie(other);
 		if(parent && !parent.isZombie)
 			parent.shootable = true;

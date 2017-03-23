@@ -15,7 +15,7 @@ public class Alien : Ent2D {
         if (shootable)
         {
 			//Debug.Log("Create bomb");
-            Ent2D.CreateBomb(child, this, -DIST_Y, -7.79f, 7.79f, false);
+            Ent2D.CreateBomb(child, this, -DIST_Y, 7.79f, -7.79f, false);
         }
 		if (startMoving && !MoveIndex (index)) {
 			index = ( index + 1 )%2;
