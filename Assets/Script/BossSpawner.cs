@@ -18,6 +18,7 @@ public class BossSpawner : MonoBehaviour {
 		Boss boss = spawner.GetComponent<Boss> ();
 		boss.Init(transform.position.x, transform.position.x + diameterX, transform.position.y + diameterY/2.0f, transform.position.y - diameterY/2.0f);
 		boss.shootable = true;
+		boss.startMoving = true;
 		//Debug.Log ("Boss spawn");
 	}
 
