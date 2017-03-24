@@ -16,12 +16,10 @@ public class AlienSpawner : MonoBehaviour {
 	public static int currentShootable = 0;
 	public static Dictionary<int, bool> rsMap = new Dictionary<int, bool> (); // rowshootable map
     public string AlienType;
-    private Alien[] aliens;
+    public Alien[] aliens;
     private Dictionary<int, int> pickedAlienMap = new Dictionary<int, int>();
     public int deads = 0;
-    //public static AlienDieEvent alienDieEvent = new AlienDieEvent();
    
-
 	// Use this for initialization
 	void Start () {
 		rsMap.Add (rowShootable, false);
@@ -35,7 +33,6 @@ public class AlienSpawner : MonoBehaviour {
 			GameObject go = Instantiate (spawner,new Vector3(spawnX,spawnY,0.0f),Quaternion.identity);
 			Alien goAlien = go.GetComponent<Alien> ();
 			goAlien.Init ();
-            //Debug.Log("debug:" + goAlien.shootable);
 			goAlien.LEFT_BOUND_X = spawnX;
 			goAlien.RIGHT_BOUND_X = spawnX + distX;//spawnX + goAlien.RIGHT_BOUND_X - (col - j) * (sr.bounds.size.x + insetX);
             goAlien.distDivider = DistDivider;
@@ -48,14 +45,11 @@ public class AlienSpawner : MonoBehaviour {
         {
             pickRandomAliensShootableNotDead(numShootable);
         }
-
-        //alienDieEvent.AddListener(OnAlienDie);
 	}
 
     
     //picked = isZombie || isInMap
     bool isAlienAlreadyPicked(Alien alien){
-        //Debug.Log("hashcodeater:" + alien.GetHashCode());
         int index;
         bool isZ = alien.isZombie;
         //Debug.Log("isZombie:"+ isZ);
@@ -69,7 +63,15 @@ public class AlienSpawner : MonoBehaviour {
         int randomIndex = Random.Range(0, aliens.Length);
         //Debug.Log("how about index:" + randomIndex);
         //Debug.Log("hashcodeb4:" + aliens[randomIndex].GetHashCode());
-        while (isAlienAlreadyPicked(aliens[randomIndex])) { randomIndex = Random.Range(0, aliens.Length); }
+		//last one and it is already picked?
+		int nAvails = aliens.Length - deads;
+        while (isAlienAlreadyPicked(aliens[randomIndex])) {
+			if (nAvails == 1) {
+				//isAlready picked break
+				break;
+			}
+			randomIndex = Random.Range(0, aliens.Length); 
+		}
         return randomIndex;
     }
 
@@ -81,8 +83,12 @@ public class AlienSpawner : MonoBehaviour {
     }
 
     void pickRandomAliensShootableNotDead(int nums){
-        int nAvails = nums - deads; // BEWARE of nums > available
-        for (int i = 0; i < nAvails; i++){
+		int nAvails = aliens.Length - deads; // BEWARE of nums > available
+		int picks = (nums <= nAvails) ? nums : nAvails;
+		Debug.Log("available:" + nAvails);
+		Debug.Log ("want:" + nums);
+		Debug.Log ("pick:" + picks);
+        for (int i = 0; i < picks; i++){
             pickRandomAlienShootableNotDead(); 
         }
     }
@@ -148,7 +154,7 @@ public class AlienSpawner : MonoBehaviour {
         if(rowShootable == row){
 			currentShootable = rowShootable;
             shootable = true;
-            pickRandomAlienShootableNotDead();
+			pickRandomAliensShootableNotDead(numShootable);
         }
     }
     

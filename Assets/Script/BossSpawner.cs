@@ -14,13 +14,17 @@ public class BossSpawner : MonoBehaviour {
 	// Use this for initialization
 
 	void Spawn(Vector3 Location){
-		GameObject bossGo = Instantiate (spawner,transform.position,Quaternion.identity);
-		Boss boss = spawner.GetComponent<Boss> ();
-		boss.Init(transform.position.x, transform.position.x + diameterX, transform.position.y + diameterY/2.0f, transform.position.y - diameterY/2.0f);
+		GameObject bossGo = Instantiate (spawner,Location,Quaternion.identity);
+		Boss boss = bossGo.GetComponent<Boss> ();
+		boss.Init(Location.x, Location.x + diameterX, Location.y + diameterY/2.0f, Location.y - diameterY/2.0f);
 		boss.shootable = true;
 		boss.startMoving = true;
 		//Debug.Log ("Boss spawn");
 	}
+
+//	void Start(){
+//		Spawn (transform.position);
+//	}
 
 	public void OnPossibleSpawn(int row){
 		if(rowShootable == row){

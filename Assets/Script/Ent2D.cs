@@ -41,7 +41,7 @@ public class Ent2D : MonoBehaviour {
 		EntUpdate();
 	}
 
-	public void Init(float lbx = -7.79f, float rbx = 7.79f, float uby = -7.79f, float dby = 7.79f){
+	public virtual void Init(float lbx = -7.79f, float rbx = 7.79f, float uby = -7.79f, float dby = 7.79f){
 		sr = GetComponent<SpriteRenderer> ();
 		mover = GetComponent<Movement> ();
 		DIST_X = sr.bounds.extents.x;

@@ -15,15 +15,15 @@ public class Boss : Ent2D {
 
 
 	//testing movement
-	/*void Start(){
-		Init(transform.position.x, transform.position.x + diameterX, transform.position.y + diameterY/2.0f, transform.position.y - diameterY/2.0f);
-		if (dev) {
-			CreateCirc (new Vector3 (transform.position.x, transform.position.y, transform.position.z), Color.green); //lbx
-			CreateCirc (new Vector3 (transform.position.x + diameterX, transform.position.y, transform.position.z), Color.green); //rbx
-			CreateCirc (new Vector3 (transform.position.x + diameterX/2.0f, transform.position.y + diameterY/2.0f, transform.position.z), Color.green); //uby
-			CreateCirc (new Vector3 (transform.position.x + diameterX/2.0f, transform.position.y - diameterY/2.0f, transform.position.z), Color.green); //dby
-		}
-	}*/
+//	void Start(){
+//		Init(transform.position.x, transform.position.x + diameterX, transform.position.y + diameterY/2.0f, transform.position.y - diameterY/2.0f);
+//		if (dev) {
+//			CreateCirc (new Vector3 (transform.position.x, transform.position.y, transform.position.z), Color.green); //lbx
+//			CreateCirc (new Vector3 (transform.position.x + diameterX, transform.position.y, transform.position.z), Color.green); //rbx
+//			CreateCirc (new Vector3 (transform.position.x + diameterX/2.0f, transform.position.y + diameterY/2.0f, transform.position.z), Color.green); //uby
+//			CreateCirc (new Vector3 (transform.position.x + diameterX/2.0f, transform.position.y - diameterY/2.0f, transform.position.z), Color.green); //dby
+//		}
+//	}
 
 	public override void EntUpdate(){
 		if (shootable)
