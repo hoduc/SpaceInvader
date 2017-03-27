@@ -18,12 +18,12 @@ public class Stat : MonoBehaviour {
 	}
 
 	public void OnPlayerDie(){
-		if (lives - 1 == 0) {
-			Debug.Log ("game over");
-			return;
-		}
 		//take off live
 		Destroy(liveSprites[lives-1]);
 		lives--;
+		if(lives <= 0){
+			Debug.Log("game over!!!");
+			EventDispatcher.Instance.GameOverEvent.Invoke();
+		}
 	}
 }

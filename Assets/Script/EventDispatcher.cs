@@ -12,8 +12,8 @@ public class EventDispatcher : MonoBehaviour {
 	public UnityEvent PlayerDieEvent;
 	public AlienDieUnityEvent AlienDieEvent;
 	public UnityEvent PlayerFinishedDyingEvent;
-
 	public ShootableRowEradicateUnityEvent ShootableRowEradicateEvent;
+	public UnityEvent GameOverEvent;
  	public static EventDispatcher Instance = null;    
 	 //Awake is always called before any Start functions
 	void Awake()

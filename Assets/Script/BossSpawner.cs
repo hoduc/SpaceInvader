@@ -13,12 +13,14 @@ public class BossSpawner : MonoBehaviour {
 	public int deads = 0;
 	// Use this for initialization
 
+	private Boss bossRef;
 	void Spawn(Vector3 Location){
 		GameObject bossGo = Instantiate (spawner,Location,Quaternion.identity);
 		Boss boss = bossGo.GetComponent<Boss> ();
 		boss.Init(Location.x, Location.x + diameterX, Location.y + diameterY/2.0f, Location.y - diameterY/2.0f);
 		boss.shootable = true;
 		boss.startMoving = true;
+		bossRef = boss;
 		//Debug.Log ("Boss spawn");
 	}
 
@@ -30,5 +32,9 @@ public class BossSpawner : MonoBehaviour {
 		if(rowShootable == row){
 			Spawn (transform.position);
 		}
+	}
+
+	public void OnGameOver(){
+		Destroy(bossRef.gameObject);
 	}
 }

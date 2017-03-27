@@ -48,4 +48,8 @@ public class Player : Ent2D{
 		sr.sprite = spawnSprite;
 		sr.enabled = true;
 	}
+
+	public void OnGameOver(){
+		Destroy(gameObject);
+	}
 }

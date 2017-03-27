@@ -113,10 +113,6 @@ public class AlienSpawner : MonoBehaviour {
 				rsMap [rowShootable] = true;
 			}
 
-//			foreach (var item in rsMap) {
-//				Debug.Log (item.Key + "=>" + item.Value);
-//			}
-
 			if (currentShootable == rowShootable){//currentshootable ddead{
 				if (currentShootable == 2) {
 					Debug.Log ("last row");
@@ -157,6 +153,15 @@ public class AlienSpawner : MonoBehaviour {
             shootable = true;
 			pickRandomAliensShootableNotDead(numShootable);
         }
+    }
+
+    void ClearAliens(){
+        foreach(Alien a in aliens){
+            Destroy(a.gameObject);
+        }
+    }
+    public void OnGameOver(){
+        ClearAliens();
     }
     
 }
