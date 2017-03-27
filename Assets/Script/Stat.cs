@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Stat : MonoBehaviour {
 	public int lives = 3;
 	public GameObject liveSprite;
+	public Text endGameMsg;
 	private GameObject[] liveSprites;
 	// Use this for initialization
 	void Start () {
@@ -23,7 +25,18 @@ public class Stat : MonoBehaviour {
 		lives--;
 		if(lives <= 0){
 			Debug.Log("game over!!!");
+			EnableMsg("You Lose");
 			EventDispatcher.Instance.GameOverEvent.Invoke();
+			//go back to main scene
 		}
+	}
+
+	public void OnGameWin(){
+		EnableMsg("You Win");
+	}
+
+	void EnableMsg(string msg){
+		endGameMsg.text = msg;
+		endGameMsg.enabled = true;
 	}
 }

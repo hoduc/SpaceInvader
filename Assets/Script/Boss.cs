@@ -78,4 +78,10 @@ public class Boss : Ent2D {
 		}
 		return ret;
 	}
+
+	public override void OnDie(Collider2D other){
+		base.OnDie(other);
+        //broadcast die event
+        EventDispatcher.Instance.GameBeatEvent.Invoke();
+	}
 }
