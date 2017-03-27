@@ -5,9 +5,7 @@ using UnityEngine.Events;
 
 public class Player : Ent2D{
 	public UnityEvent TakeDamageEvent; // drytest
-	// Use this for initialization
 
-	bool isMouseDown = false;
 	void Start(){
 		Init ();
 	}
@@ -15,6 +13,7 @@ public class Player : Ent2D{
 
 	// Update is called once per frame
 	public override void EntUpdate () {
+		Debug.Log ("width left:" + Camera.main.ScreenToWorldPoint (new Vector3 (-Screen.width, 0.0f, 0.0f)).x);
 		if (Input.GetMouseButtonDown (0) && transform.position.x <  Camera.main.ScreenToWorldPoint(Input.mousePosition).x) {
 			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
 		} else if (Input.GetMouseButtonDown (0) && transform.position.x > Camera.main.ScreenToWorldPoint(Input.mousePosition).x) {
@@ -33,9 +32,13 @@ public class Player : Ent2D{
 			TakeDamageEvent.Invoke (); //die
 		}
 
-		if (Input.GetKeyDown (KeyCode.Space) && shootable) {
+		if (/*Input.GetKeyDown (KeyCode.Space) &&*/ !isShooting && shootable) { //autofire
             Ent2D.CreateBomb(child, this, DIST_Y, UP_BOUND_Y, -DOWN_BOUND_Y);
 		}
+	}
+
+	public void EnableShoot(){
+		shootable = true;
 	}
 
 	public void OnDieTest(){

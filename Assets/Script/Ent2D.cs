@@ -15,6 +15,7 @@ public class Ent2D : MonoBehaviour {
 	public float dieSec = 1.0f;
 	public bool shootable = true;
     public bool isZombie = false;
+	public bool isShooting = false;
 
 	protected float DIST_X;
 	protected float DIST_Y;
@@ -23,11 +24,6 @@ public class Ent2D : MonoBehaviour {
 	public float RIGHT_BOUND_X;
 	public float UP_BOUND_Y;
 	public float DOWN_BOUND_Y;
-
-	//public static float LBX = Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width, 0.0f, 0.0f)).x;  //-7.79f;
-	//public static float RBX = Screen.width;  //7.79f;
-	//public static float UBY = Screen.height; //-7.79f;
-	//public static float DBY = -Screen.height; //7.79f;
 
 	void Start(){
 		sr = GetComponent<SpriteRenderer> ();
@@ -39,6 +35,16 @@ public class Ent2D : MonoBehaviour {
 
 	void Update(){
 		EntUpdate();
+	}
+
+	public static Bounds OrthographicBounds(Camera camera)
+	{
+		float screenAspect = (float)Screen.width / (float)Screen.height;
+		float cameraHeight = camera.orthographicSize * 2;
+		Bounds bounds = new Bounds(
+			camera.transform.position,
+			new Vector3(cameraHeight * screenAspect, cameraHeight, 0));
+		return bounds;
 	}
 
 	public virtual void Init(float lbx /*= -7.79f*/, float rbx /*= 7.79f*/, float uby /*= -7.79f*/, float dby /*= 7.79f*/){
@@ -55,10 +61,18 @@ public class Ent2D : MonoBehaviour {
 	}
 
 	public virtual void Init(){
-		Init(Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width, 0.0f, 0.0f)).x, 
-			 Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x, 
-			 Camera.main.ScreenToWorldPoint(new Vector3(0.0f, Screen.height, 0.0f)).y, 
-			 Camera.main.ScreenToWorldPoint(new Vector3(0.0f, -Screen.height, 0.0f)).y);
+		//Bounds screenBound = OrthographicBounds (Camera.main);
+//		Debug.Log ("minx:" + screenBound.min.x);
+//		Debug.Log ("maxx:" + screenBound.max.x);
+//		Debug.Log ("miny:" + screenBound.min.y);
+//		Debug.Log ("maxy:" + screenBound.max.y);
+		float rbx = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x;
+		float uby = Camera.main.ScreenToWorldPoint (new Vector3 (0.0f, Screen.height, 0.0f)).y;
+//		Init(Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width, 0.0f, 0.0f)).x, 
+//			 Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x, 
+//			 Camera.main.ScreenToWorldPoint(new Vector3(0.0f, Screen.height, 0.0f)).y, 
+//			 Camera.main.ScreenToWorldPoint(new Vector3(0.0f, -Screen.height, 0.0f)).y);
+		Init(-rbx, rbx, uby, -uby);
 	}
 
 	public void SetUpBoundY(float uby){
@@ -96,6 +110,7 @@ public class Ent2D : MonoBehaviour {
 		sr.sprite = dieSprite;
 		isZombie = true;
 		shootable = false;
+		isShooting = false;
 		GetComponent<BoxCollider2D>().isTrigger = false;
 		StartCoroutine (finishedDieTime (dieSec));
 	}
@@ -115,6 +130,7 @@ public class Ent2D : MonoBehaviour {
         b.SetUpBoundY(upBoundY);
         b.SetDownBoundY(downBoundY);
         owner.shootable = false;
+		owner.isShooting = true;
         return b;
     }
 }

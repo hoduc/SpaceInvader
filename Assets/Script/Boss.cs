@@ -51,25 +51,25 @@ public class Boss : Ent2D {
 		switch (index) {
 		case 0:
 			ret = mover.MoveDiagonalUpRight(DIST_X/distDivider, DIST_Y/distDivider, LEFT_BOUND_X + diameterX/2.0f, UP_BOUND_Y);
-			if(ret)
-				Debug.Log("up-right!");
+//			if(ret)
+//				Debug.Log("up-right!");
 			break;
 		case 1:
 			//Debug.Log ("here?");
 			ret = mover.MoveDiagonalDownRight(DIST_X/distDivider, DIST_Y/distDivider, RIGHT_BOUND_X, DOWN_BOUND_Y - diameterY/2.0f);
-			if(ret)
-				Debug.Log ("down-right!");	
+//			if(ret)
+//				Debug.Log ("down-right!");	
 			break;
 		case 2:
 			ret = mover.MoveDiagonalDownLeft(DIST_X/distDivider, DIST_Y/distDivider, LEFT_BOUND_X + diameterX/2.0f, DOWN_BOUND_Y - diameterY/2.0f);
-			if(ret)
-				Debug.Log ("down-left!");
+//			if(ret)
+//				Debug.Log ("down-left!");
             break;
 		case 3:
 			
 			ret = mover.MoveDiagonalUpLeft(DIST_X/distDivider, DIST_Y/distDivider, LEFT_BOUND_X, UP_BOUND_Y - diameterY/2.0f);
-			if(ret)
-				Debug.Log ("up-left!");
+//			if(ret)
+//				Debug.Log ("up-left!");
             break;
 
         }

@@ -9,10 +9,14 @@ public class Alien : Ent2D {
 	public string AlienType = "alien";
 	//driving index by an array for example
 
+	void Start(){
+		Init ();
+	}
+
 	public override void EntUpdate () {
 		//Debug.Log("base shootable=" + base.shootable);
         //Debug.Log("alien Shootable:" + this.shootable);
-        if (shootable)
+		if (shootable && !isShooting)
         {
 			//Debug.Log("Create bomb");
             Ent2D.CreateBomb(child, this, -DIST_Y, UP_BOUND_Y/*7.79f*/, DOWN_BOUND_Y/*-7.79f*/, false);
@@ -39,9 +43,8 @@ public class Alien : Ent2D {
     public override void OnDie(Collider2D other)
     {
         base.OnDie(other);
-		
-		Debug.Log("shootable = " + shootable);
-		Debug.Log("isZombie=" + isZombie);
+		//Debug.Log("shootable = " + shootable);
+		//Debug.Log("isZombie=" + isZombie);
         //broadcast die event
         EventDispatcher.Instance.AlienDieEvent.Invoke(this);
     }

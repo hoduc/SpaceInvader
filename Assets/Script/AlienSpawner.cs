@@ -86,9 +86,9 @@ public class AlienSpawner : MonoBehaviour {
     void pickRandomAliensShootableNotDead(int nums){
 		int nAvails = aliens.Length - deads; // BEWARE of nums > available
 		int picks = (nums <= nAvails) ? nums : nAvails;
-		Debug.Log("available:" + nAvails);
-		Debug.Log ("want:" + nums);
-		Debug.Log ("pick:" + picks);
+//		Debug.Log("available:" + nAvails);
+//		Debug.Log ("want:" + nums);
+//		Debug.Log ("pick:" + picks);
         for (int i = 0; i < picks; i++){
             pickRandomAlienShootableNotDead(); 
         }
@@ -104,7 +104,7 @@ public class AlienSpawner : MonoBehaviour {
         //register dead
         deads++;
         if(deads == aliens.Length){//safely remove all aliens from scene
-            Debug.Log("shootableRowDestroyed!!!");
+            //Debug.Log("shootableRowDestroyed!!!");
             foreach(Alien a in aliens){
                 Destroy(a.gameObject);
             }
@@ -124,14 +124,14 @@ public class AlienSpawner : MonoBehaviour {
 				for (; i < rsMap.Count; i++) {
 					isDead = false;
 					if (rsMap.TryGetValue (i, out isDead)) {
-						Debug.Log ("row:" + i + ":" + isDead);
+						//Debug.Log ("row:" + i + ":" + isDead);
 						if(!isDead){
 							
 							break;
 						}
 					}
 				}
-				Debug.Log ("next row:" + i);
+				//Debug.Log ("next row:" + i);
 				EventDispatcher.Instance.ShootableRowEradicateEvent.Invoke (i); // next one responsible for the shootable
             	
 			}
