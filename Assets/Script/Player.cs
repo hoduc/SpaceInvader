@@ -26,7 +26,7 @@ public class Player : Ent2D{
 		}
 
 		if (Input.GetKeyDown (KeyCode.Space) && shootable) {
-            Ent2D.CreateBomb(child, this, DIST_Y);
+            Ent2D.CreateBomb(child, this, DIST_Y, UP_BOUND_Y, -DOWN_BOUND_Y);
 		}
 	}
 

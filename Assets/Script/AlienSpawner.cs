@@ -22,11 +22,12 @@ public class AlienSpawner : MonoBehaviour {
    
 	// Use this for initialization
 	void Start () {
+        float RBX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x;
 		rsMap.Add (rowShootable, false);
         aliens = new Alien[col];
 		SpriteRenderer sr = spawner.GetComponent<SpriteRenderer> ();
 		float lastPos = transform.position.x + col * (sr.bounds.size.x + insetX);
-		float distX = Ent2D.RBX - lastPos;
+		float distX = RBX - lastPos;
 		for (int j = 0; j < col; j++) {
 			float spawnX = transform.position.x + j * (sr.bounds.size.x + insetX);
 			float spawnY = transform.position.y /*+ i *  insetY*/;

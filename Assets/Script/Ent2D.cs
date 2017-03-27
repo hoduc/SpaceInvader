@@ -24,10 +24,10 @@ public class Ent2D : MonoBehaviour {
 	public float UP_BOUND_Y;
 	public float DOWN_BOUND_Y;
 
-	public static float LBX = -7.79f;
-	public static float RBX = 7.79f;
-	public static float UBY = -7.79f;
-	public static float DBY = 7.79f;
+	//public static float LBX = Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width, 0.0f, 0.0f)).x;  //-7.79f;
+	//public static float RBX = Screen.width;  //7.79f;
+	//public static float UBY = Screen.height; //-7.79f;
+	//public static float DBY = -Screen.height; //7.79f;
 
 	void Start(){
 		sr = GetComponent<SpriteRenderer> ();
@@ -41,7 +41,7 @@ public class Ent2D : MonoBehaviour {
 		EntUpdate();
 	}
 
-	public virtual void Init(float lbx = -7.79f, float rbx = 7.79f, float uby = -7.79f, float dby = 7.79f){
+	public virtual void Init(float lbx /*= -7.79f*/, float rbx /*= 7.79f*/, float uby /*= -7.79f*/, float dby /*= 7.79f*/){
 		sr = GetComponent<SpriteRenderer> ();
 		mover = GetComponent<Movement> ();
 		DIST_X = sr.bounds.extents.x;
@@ -52,6 +52,13 @@ public class Ent2D : MonoBehaviour {
 		DOWN_BOUND_Y = dby;
 		//Debug.Log ("spawnCLip:" + spawnClip);
 		PlaySound (spawnClip, transform.position);
+	}
+
+	public virtual void Init(){
+		Init(Camera.main.ScreenToWorldPoint(new Vector3(-Screen.width, 0.0f, 0.0f)).x, 
+			 Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x, 
+			 Camera.main.ScreenToWorldPoint(new Vector3(0.0f, Screen.height, 0.0f)).y, 
+			 Camera.main.ScreenToWorldPoint(new Vector3(0.0f, -Screen.height, 0.0f)).y);
 	}
 
 	public void SetUpBoundY(float uby){
@@ -99,7 +106,7 @@ public class Ent2D : MonoBehaviour {
 		EventDispatcher.Instance.PlayerFinishedDyingEvent.Invoke();
     }
 
-    public static Bomb CreateBomb(GameObject bomb, Ent2D owner, float dropY, float upBoundY = 7.79f, float downBoundY = 7.79f, bool bomFlip = true)
+    public static Bomb CreateBomb(GameObject bomb, Ent2D owner, float dropY, float upBoundY, float downBoundY, bool bomFlip = true)
     {
         GameObject go = GameObject.Instantiate(bomb, new Vector3(owner.transform.position.x, owner.transform.position.y + dropY, 0.0f), Quaternion.identity);
         Bomb b = go.GetComponent<Bomb>();
