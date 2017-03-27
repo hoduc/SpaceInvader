@@ -7,12 +7,20 @@ public class Player : Ent2D{
 	public UnityEvent TakeDamageEvent; // drytest
 	// Use this for initialization
 
+	bool isMouseDown = false;
 	void Start(){
 		Init ();
 	}
 
+
 	// Update is called once per frame
 	public override void EntUpdate () {
+		if (Input.GetMouseButtonDown (0) && transform.position.x <  Camera.main.ScreenToWorldPoint(Input.mousePosition).x) {
+			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
+		} else if (Input.GetMouseButtonDown (0) && transform.position.x > Camera.main.ScreenToWorldPoint(Input.mousePosition).x) {
+			mover.MoveLeft (DIST_X, LEFT_BOUND_X);
+		}
+
 		if (Input.GetKeyDown (KeyCode.RightArrow) && !isZombie) {
 			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
 		}
