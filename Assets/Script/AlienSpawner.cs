@@ -50,7 +50,7 @@ public class AlienSpawner : MonoBehaviour {
 
     
     //picked = isZombie || isInMap
-    bool isAlienAlreadyPicked(Alien alien){
+    bool isAlienNotPickable(Alien alien){
         int index;
         bool isZ = alien.isZombie;
         //Debug.Log("isZombie:"+ isZ);
@@ -66,7 +66,7 @@ public class AlienSpawner : MonoBehaviour {
         //Debug.Log("hashcodeb4:" + aliens[randomIndex].GetHashCode());
 		//last one and it is already picked?
 		int nAvails = aliens.Length - deads;
-        while (isAlienAlreadyPicked(aliens[randomIndex])) {
+        while (isAlienNotPickable(aliens[randomIndex])) {
 			if (nAvails == 1) {
 				//isAlready picked break
 				break;

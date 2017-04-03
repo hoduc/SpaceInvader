@@ -10,13 +10,18 @@ public class Player : Ent2D{
 		Init ();
 	}
 
-
+	float ScreenX(){
+		return Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
+	}
+	
 	// Update is called once per frame
 	public override void EntUpdate () {
-		Debug.Log ("width left:" + Camera.main.ScreenToWorldPoint (new Vector3 (-Screen.width, 0.0f, 0.0f)).x);
-		if (Input.GetMouseButtonDown (0) && transform.position.x <  Camera.main.ScreenToWorldPoint(Input.mousePosition).x) {
+		if(isZombie)
+			return;
+		//Debug.Log ("width left:" + Camera.main.ScreenToWorldPoint (new Vector3 (-Screen.width, 0.0f, 0.0f)).x);
+		if (Input.GetMouseButtonDown (0) && transform.position.x <  ScreenX()) {
 			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
-		} else if (Input.GetMouseButtonDown (0) && transform.position.x > Camera.main.ScreenToWorldPoint(Input.mousePosition).x) {
+		} else if (Input.GetMouseButtonDown (0) && transform.position.x > ScreenX()) {
 			mover.MoveLeft (DIST_X, LEFT_BOUND_X);
 		}
 
