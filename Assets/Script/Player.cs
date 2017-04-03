@@ -13,24 +13,37 @@ public class Player : Ent2D{
 	float ScreenX(){
 		return Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
 	}
-	
+
+	void moveRightWrapper(){
+		if(!mover.MoveRight (DIST_X, RIGHT_BOUND_X - DIST_X)){
+			transform.position = new Vector3(RIGHT_BOUND_X - DIST_X, transform.position.y, transform.position.z);
+		}
+	}
+
+	void moveLeftWrapper(){
+		if(!mover.MoveLeft (DIST_X, LEFT_BOUND_X + DIST_X)){
+			transform.position = new Vector3(LEFT_BOUND_X + DIST_X, transform.position.y, transform.position.z);
+		}
+	}
+
 	// Update is called once per frame
 	public override void EntUpdate () {
 		if(isZombie)
 			return;
+		//not dead
 		//Debug.Log ("width left:" + Camera.main.ScreenToWorldPoint (new Vector3 (-Screen.width, 0.0f, 0.0f)).x);
 		if (Input.GetMouseButtonDown (0) && transform.position.x <  ScreenX()) {
-			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
+			moveRightWrapper();
 		} else if (Input.GetMouseButtonDown (0) && transform.position.x > ScreenX()) {
-			mover.MoveLeft (DIST_X, LEFT_BOUND_X);
+			moveLeftWrapper();
 		}
 
-		if (Input.GetKeyDown (KeyCode.RightArrow) && !isZombie) {
-			mover.MoveRight (DIST_X, RIGHT_BOUND_X);
+		if (Input.GetKeyDown (KeyCode.RightArrow)) {
+			moveRightWrapper();
 		}
 
-		if (Input.GetKeyDown (KeyCode.LeftArrow) && !isZombie) {
-			mover.MoveLeft (DIST_X, LEFT_BOUND_X);
+		if (Input.GetKeyDown (KeyCode.LeftArrow)) {
+			moveLeftWrapper();
 		}
 
 		if (Input.GetKeyDown (KeyCode.D)) {

@@ -26,14 +26,33 @@ public class Alien : Ent2D {
 		}
 	}
 
+	bool moveRightWrapper(){
+		bool ret = mover.MoveRight (DIST_X / distDivider, RIGHT_BOUND_X - DIST_X / distDivider);
+		if(!ret){
+			transform.position = new Vector3(RIGHT_BOUND_X - DIST_X / distDivider, transform.position.y, transform.position.z);
+		}
+		return ret;
+	}
+
+	bool moveLeftWrapper(){
+		bool ret = mover.MoveLeft (DIST_X/ distDivider, LEFT_BOUND_X + DIST_X/ distDivider);
+		if(!ret){
+			transform.position = new Vector3(LEFT_BOUND_X + DIST_X/ distDivider, transform.position.y, transform.position.z);
+		}
+		return ret;
+	}
+
+
 	bool MoveIndex(int index){
 		bool ret = false;
 		switch (index) {
 		case 0:
-			ret = mover.MoveRight (DIST_X / distDivider, RIGHT_BOUND_X);
+			//ret = mover.MoveRight (DIST_X / distDivider, RIGHT_BOUND_X);
+			ret = moveRightWrapper();
 			break;
 		case 1:
-			ret = mover.MoveLeft (DIST_X/ distDivider, LEFT_BOUND_X);
+			//ret = mover.MoveLeft (DIST_X/ distDivider, LEFT_BOUND_X);
+			ret = moveLeftWrapper();
 			break;
 		}
 
