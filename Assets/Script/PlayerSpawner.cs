@@ -7,7 +7,9 @@ public class PlayerSpawner : MonoBehaviour {
 	public Player player;
 
 	public void OnSpawn(){
-		GameObject go = Instantiate (spawner,new Vector3(transform.position.x,transform.position.y,0.0f),Quaternion.identity);
+		float spawnX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width/2.0f, 0.0f, 0.0f)).x;
+		float spawnY = transform.position.y;
+		GameObject go = Ent2D.Create2DGameObject(spawner, spawnX, spawnY);
         go.name = "player";
         player = go.GetComponent<Player> ();
         player.Init ();

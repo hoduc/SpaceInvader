@@ -45,6 +45,10 @@ public class LevelScripter : MonoBehaviour {
 		//simply invoke the event
 		EventDispatcher.Instance.GameStartEvent.Invoke();
 	}
+
+	public void QuitGame(){
+		Application.Quit(); //quick for now
+	}
 	
 
 	void PlayClip(AudioSource audioSource, AudioClip clip, bool loop = false, float volume = 1.0f){

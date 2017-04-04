@@ -18,6 +18,8 @@ public class EventDispatcher : MonoBehaviour {
 	public UnityEvent GameOverEvent;
 
 	public UnityEvent GameBeatEvent;
+
+	public UnityEvent QuitGameEvent;
  	public static EventDispatcher Instance = null;    
 	 //Awake is always called before any Start functions
 	void Awake()

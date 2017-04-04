@@ -8,10 +8,13 @@ public class Stat : MonoBehaviour {
 	public GameObject liveSprite;
 	public Text endGameMsg;
 	private GameObject[] liveSprites;
-	// Use this for initialization
-	void Start () {
+
+
+	public void StartSpawnLives(){
 		SpriteRenderer liveSpriteRenderer = liveSprite.GetComponent<SpriteRenderer> ();
-		float x = transform.position.x;
+		//float RBX = ;
+		//float x = transform.position.x;
+		float x = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x - liveSpriteRenderer.bounds.extents.x;
 		float y = transform.position.y;
 		liveSprites = new GameObject[lives];
 		for (int i = 0; i < lives; i++) {
@@ -33,6 +36,7 @@ public class Stat : MonoBehaviour {
 
 	public void OnGameWin(){
 		EnableMsg("You Win");
+		EventDispatcher.Instance.QuitGameEvent.Invoke();
 	}
 
 	void EnableMsg(string msg){

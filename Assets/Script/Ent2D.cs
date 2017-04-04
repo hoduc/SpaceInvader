@@ -126,9 +126,13 @@ public class Ent2D : MonoBehaviour {
 
 	}
 
+	public static GameObject Create2DGameObject(GameObject go, float x, float y){
+		return GameObject.Instantiate (go,new Vector3(x,y,0.0f),Quaternion.identity) as GameObject;
+	}
+
     public static Bomb CreateBomb(GameObject bomb, Ent2D owner, float dropY, float upBoundY, float downBoundY, bool bomFlip = true)
     {
-        GameObject go = GameObject.Instantiate(bomb, new Vector3(owner.transform.position.x, owner.transform.position.y + dropY, 0.0f), Quaternion.identity);
+        GameObject go = Create2DGameObject(bomb, owner.transform.position.x, owner.transform.position.y + dropY);
         Bomb b = go.GetComponent<Bomb>();
         b.Init();
         b.SetOwner(owner, bomFlip);
