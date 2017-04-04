@@ -9,9 +9,9 @@ public class Alien : Ent2D {
 	public string AlienType = "alien";
 	//driving index by an array for example
 
-	void Start(){
-		Init ();
-	}
+	// void Start(){
+	// 	Init ();
+	// }
 
 	public override void EntUpdate () {
 		//Debug.Log("base shootable=" + base.shootable);
@@ -27,17 +27,19 @@ public class Alien : Ent2D {
 	}
 
 	bool moveRightWrapper(){
-		bool ret = mover.MoveRight (DIST_X / distDivider, RIGHT_BOUND_X - DIST_X / distDivider);
+		bool ret = mover.MoveRight (DIST_X / distDivider, RIGHT_BOUND_X - DIST_X);
 		if(!ret){
-			transform.position = new Vector3(RIGHT_BOUND_X - DIST_X / distDivider, transform.position.y, transform.position.z);
+			//Debug.Log("RBX-DX:" + (RIGHT_BOUND_X - DIST_X/distDivider));
+			transform.position = new Vector3(RIGHT_BOUND_X - DIST_X, transform.position.y, transform.position.z);
+			//Debug.Log("posx:" + transform.position.x);
 		}
 		return ret;
 	}
 
 	bool moveLeftWrapper(){
-		bool ret = mover.MoveLeft (DIST_X/ distDivider, LEFT_BOUND_X + DIST_X/ distDivider);
+		bool ret = mover.MoveLeft (DIST_X/ distDivider, LEFT_BOUND_X + DIST_X);
 		if(!ret){
-			transform.position = new Vector3(LEFT_BOUND_X + DIST_X/ distDivider, transform.position.y, transform.position.z);
+			transform.position = new Vector3(LEFT_BOUND_X + DIST_X, transform.position.y, transform.position.z);
 		}
 		return ret;
 	}

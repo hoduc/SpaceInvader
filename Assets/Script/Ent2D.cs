@@ -133,4 +133,12 @@ public class Ent2D : MonoBehaviour {
 		owner.isShooting = true;
         return b;
     }
+
+	public static void CreateCirc(Vector3 pos, Color color, string name = "sphere", float sz = 0.25f){
+		GameObject circ = GameObject.CreatePrimitive (PrimitiveType.Sphere);
+		circ.name = name;
+		circ.transform.position = pos;
+		circ.transform.localScale = new Vector3 (sz, sz, sz);
+		circ.GetComponent<Renderer> ().material.color = color;
+	}
 }

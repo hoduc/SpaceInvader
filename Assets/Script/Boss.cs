@@ -38,13 +38,6 @@ public class Boss : Ent2D {
 		}
 	}
 
-	static void CreateCirc(Vector3 pos, Color color){
-		GameObject circ = GameObject.CreatePrimitive (PrimitiveType.Sphere);
-		circ.transform.position = pos;
-		circ.transform.localScale = new Vector3 (0.25f, 0.25f, 0.25f);
-		circ.GetComponent<Renderer> ().material.color = color;
-	}
-
 	bool MoveIndex(int index){
 		Vector3 prevPos = transform.position;
 		bool ret = false;

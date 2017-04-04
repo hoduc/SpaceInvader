@@ -13,38 +13,72 @@ public class AlienSpawner : MonoBehaviour {
     public bool shootable = false;
     public int rowShootable = 0;
     public int numShootable = 3;
+    public bool startMoving = false;
 	public static int currentShootable = 0;
 	public static Dictionary<int, bool> rsMap = new Dictionary<int, bool> (); // rowshootable map
     public string AlienType;
     public Alien[] aliens;
     private Dictionary<int, int> pickedAlienMap = new Dictionary<int, int>();
     public int deads = 0;
-   
+    
+
+    Alien CreateAlien(GameObject spawner, float spawnX, float spawnY, float lbx, float rbx, float distDivider, string alienName, bool startMoving = false){
+        GameObject go = Instantiate (spawner,new Vector3(spawnX,spawnY,0.0f),Quaternion.identity);
+        go.name = alienName;
+        Alien goAlien = go.GetComponent<Alien> ();
+        goAlien.Init ();
+        goAlien.LEFT_BOUND_X = lbx;
+        goAlien.RIGHT_BOUND_X = rbx;//spawnX + goAlien.RIGHT_BOUND_X - (col - j) * (sr.bounds.size.x + insetX);
+        goAlien.distDivider = DistDivider;
+        goAlien.startMoving = startMoving;
+        //Ent2D.CreateCirc(new Vector3(goAlien.RIGHT_BOUND_X,spawnY, transform.position.z),Color.yellow);
+        return goAlien;
+    }
+
 	// Use this for initialization
 	void Start () {
-        float RBX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x;
 		rsMap.Add (rowShootable, false);
         aliens = new Alien[col];
 		SpriteRenderer sr = spawner.GetComponent<SpriteRenderer> ();
-		float lastPos = transform.position.x + col * (sr.bounds.size.x + insetX);
-		float distX = RBX - lastPos;
-		for (int j = 0; j < col; j++) {
-			float spawnX = transform.position.x + j * (sr.bounds.size.x + insetX);
-			float spawnY = transform.position.y /*+ i *  insetY*/;
-			GameObject go = Instantiate (spawner,new Vector3(spawnX,spawnY,0.0f),Quaternion.identity);
-			Alien goAlien = go.GetComponent<Alien> ();
-			goAlien.Init ();
-			goAlien.LEFT_BOUND_X = spawnX;
-			goAlien.RIGHT_BOUND_X = spawnX + distX;//spawnX + goAlien.RIGHT_BOUND_X - (col - j) * (sr.bounds.size.x + insetX);
-            goAlien.distDivider = DistDivider;
-			goAlien.startMoving = true;
-            aliens[j] = goAlien;
-            
-        }
-        //pick the one who get to shoot
-        if (shootable)
-        {
-            pickRandomAliensShootableNotDead(numShootable);
+        float RBX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x /*- sr.bounds.extents.x*/;
+        float LBX = -RBX;
+        float alienOffsetX = sr.bounds.size.x + insetX; // + or - 
+        Debug.Log("RBX:" + RBX);
+        Debug.Log("LBX:" + LBX);
+        // Debug.Log("sz:" + sr.bounds.size);
+        // Debug.Log("alienBoundx:" + sr.bounds.extents.x);
+        // Debug.Log("alienOffsetX:" + alienOffsetX);
+        //float width = RBX*2;
+        float rbx = RBX - (col-1)*alienOffsetX;
+        float lbx = LBX;
+        Debug.Log("rbx:" + rbx);
+        Debug.Log("lbx:" + lbx);
+		//float lastPos = transform.position.x + col * (sr.bounds.size.x + insetX);
+		//float distX = RBX - lastPos;
+        // Ent2D.CreateCirc(new Vector3(rbx,transform.position.y, transform.position.z),Color.magenta, "RBX", 1.0f);
+        //Ent2D.CreateCirc(new Vector3(lbx,transform.position.y, transform.position.z),Color.blue, "LBX", 1.0f);
+        //Ent2D.CreateCirc(new Vector3(lastPos,transform.position.y, transform.position.z),Color.yellow);
+        if(col > 0){
+            float spawnX = lbx;
+            float spawnY = transform.position.y;
+            aliens[0] = CreateAlien(spawner, spawnX, spawnY, lbx, rbx, DistDivider, "alien-" + 0, startMoving);
+            // Ent2D.CreateCirc(new Vector3(rbx,spawnY, transform.position.z),Color.red, "alien-rbx-" + 0, 1.0f);
+            // Ent2D.CreateCirc(new Vector3(lbx,spawnY, transform.position.z),Color.green, "alien-lbx-" + 0, 1.0f);
+            for (int j = 1; j < col; j++) {
+                lbx += alienOffsetX;
+                rbx += alienOffsetX;
+                //lbx = aliens[j-1].LEFT_BOUND_X + j*alienOffsetX; 
+                //rbx = aliens[j-1].RIGHT_BOUND_X - j*alienOffsetX;
+                spawnX += alienOffsetX;
+                aliens[j] = CreateAlien(spawner, spawnX, spawnY, lbx, rbx, DistDivider, "alien-" + j, startMoving);
+                // Ent2D.CreateCirc(new Vector3(rbx,spawnY, transform.position.z),Color.red, "alien-rbx-" + j, 1.0f);
+                // Ent2D.CreateCirc(new Vector3(lbx,spawnY, transform.position.z),Color.green, "alien-lbx-" + j, 1.0f);
+            }
+            //pick the one who get to shoot
+            if (shootable)
+            {
+                pickRandomAliensShootableNotDead(numShootable);
+            }
         }
 	}
 
