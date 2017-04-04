@@ -11,8 +11,10 @@ public class ShootableRowEradicateUnityEvent : UnityEvent<int> {}
 public class EventDispatcher : MonoBehaviour {
 	public UnityEvent PlayerDieEvent;
 	public AlienDieUnityEvent AlienDieEvent;
-	public UnityEvent PlayerFinishedDyingEvent;
+	//public UnityEvent PlayerFinishedDyingEvent;
 	public ShootableRowEradicateUnityEvent ShootableRowEradicateEvent;
+
+	public UnityEvent GameStartEvent;
 	public UnityEvent GameOverEvent;
 
 	public UnityEvent GameBeatEvent;

@@ -35,9 +35,8 @@ public class AlienSpawner : MonoBehaviour {
         return goAlien;
     }
 
-	// Use this for initialization
-	void Start () {
-		rsMap.Add (rowShootable, false);
+    public void StartSpawn(){
+        rsMap.Add (rowShootable, false);
         aliens = new Alien[col];
 		SpriteRenderer sr = spawner.GetComponent<SpriteRenderer> ();
         float RBX = Camera.main.ScreenToWorldPoint(new Vector3(Screen.width, 0.0f, 0.0f)).x /*- sr.bounds.extents.x*/;
@@ -80,7 +79,7 @@ public class AlienSpawner : MonoBehaviour {
                 pickRandomAliensShootableNotDead(numShootable);
             }
         }
-	}
+    }
 
     
     //picked = isZombie || isInMap

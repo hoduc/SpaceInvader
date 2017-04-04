@@ -118,8 +118,13 @@ public class Ent2D : MonoBehaviour {
 	IEnumerator finishedDieTime(float sec){
 		yield return new WaitForSeconds (sec);
 		sr.enabled = false;
-		EventDispatcher.Instance.PlayerFinishedDyingEvent.Invoke();
+		//EventDispatcher.Instance.PlayerFinishedDyingEvent.Invoke();
+		OnDoneDie();
     }
+
+	public virtual void OnDoneDie(){
+
+	}
 
     public static Bomb CreateBomb(GameObject bomb, Ent2D owner, float dropY, float upBoundY, float downBoundY, bool bomFlip = true)
     {

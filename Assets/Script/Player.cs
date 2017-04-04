@@ -6,9 +6,9 @@ using UnityEngine.Events;
 public class Player : Ent2D{
 	public UnityEvent TakeDamageEvent; // drytest
 
-	void Start(){
-		Init ();
-	}
+	// public void OnSpawn(){
+	// 	Init();
+	// }
 
 	float ScreenX(){
 		return Camera.main.ScreenToWorldPoint(Input.mousePosition).x;
@@ -67,6 +67,10 @@ public class Player : Ent2D{
 	public override void OnDie(Collider2D other){
 		base.OnDie(other);
 		//fire player event
+		//EventDispatcher.Instance.PlayerDieEvent.Invoke();
+	}
+
+	public override void OnDoneDie(){
 		EventDispatcher.Instance.PlayerDieEvent.Invoke();
 	}
 
