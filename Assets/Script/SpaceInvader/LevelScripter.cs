@@ -43,11 +43,17 @@ public class LevelScripter : MonoBehaviour {
 
 	public void StartGame(){
 		//simply invoke the event
+		Debug.Log("StartGame!!!");
 		EventDispatcher.Instance.GameStartEvent.Invoke();
 	}
 
 	public void QuitGame(){
-		Application.Quit(); //quick for now
+		Debug.Log("Quit Game!!!");
+		#if UNITY_EDITOR
+        	UnityEditor.EditorApplication.isPlaying = false;
+		#else
+        	Application.Quit ();
+		#endif
 	}
 	
 

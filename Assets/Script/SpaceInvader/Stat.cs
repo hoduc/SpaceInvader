@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class Stat : MonoBehaviour {
 	public int lives = 3;
 	public GameObject liveSprite;
-	public Text endGameMsg;
+	public GameObject endGameMsg;
 	private GameObject[] liveSprites;
 
 
@@ -40,7 +40,7 @@ public class Stat : MonoBehaviour {
 	}
 
 	void EnableMsg(string msg){
-		endGameMsg.text = msg;
-		endGameMsg.enabled = true;
+		endGameMsg.GetComponent<Text>().text = msg;
+		endGameMsg.SetActive(true);
 	}
 }
